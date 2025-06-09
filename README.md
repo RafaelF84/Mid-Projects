@@ -6,13 +6,13 @@ It allows users to manage accounts, view transactions, and perform basic banking
 ## 🖥 Preview
 
 The app features:
--Login with predefined user accounts
--Display of account balance and transaction history
--Transfers between accounts
--Loan request feature
--Account closure option
--Auto logout after inactivity
--Real-time updates on UI
+- Login with predefined user accounts
+- Display of account balance and transaction history
+- Transfers between accounts
+- Loan request feature
+- Account closure option
+- Auto logout after inactivity
+- Real-time updates on UI
 
 ## 🚀 How to Run
 
@@ -40,11 +40,11 @@ It shows the current weather of any city entered by the user.
 ## 🖥 Preview
 
 The app features:
--City-based weather search
--Display of temperature, humidity, wind speed, and weather condition
--Dynamic weather icons
--Error handling for invalid cities
--Clean and responsive UI
+- City-based weather search
+- Display of temperature, humidity, wind speed, and weather condition
+- Dynamic weather icons
+- Error handling for invalid cities
+- Clean and responsive UI
 
 ## 🚀 How to Run
 
