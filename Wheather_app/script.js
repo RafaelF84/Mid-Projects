@@ -153,3 +153,5 @@ function getWeatherEmoji(text) {
   if (text.includes('mist') || text.includes('fog')) return '🌫️';
   return '🌡️';
 }
+
+// As chaves vêm do config.js, que não está no GitHub
