@@ -1,4 +1,4 @@
-const apiKey = "4e51deb1077084e38482986828c3f282";
+
 const addedCities = new Set();
 
 function addCity() {
@@ -45,7 +45,7 @@ function createWeatherCard(data) {
 }
 
 async function showCityDetails(lat, lon, name, country) {
-  const apiKeyWeatherAPI = "d60ca2bcfb5f417793c223218251006";
+  
   const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKeyWeatherAPI}&q=${lat},${lon}&days=3&aqi=no&alerts=yes`;
 
   const res = await fetch(url);
