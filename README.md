@@ -25,39 +25,42 @@ No installation or setup required
 ## 📁 Files
 
 - `index.html` — main structure and layout
-
 - `style.css` — styling and layout design
-
 - `script.js` — banking logic and interactivity
 
 ---
 
 # ☀️ Weather App
 
-This is a weather application that fetches real-time data using the OpenWeatherMap API.
-It shows the current weather of any city entered by the user.
+This is a weather application that fetches real-time data using the OpenWeatherMap API for city cards and WeatherAPI.com for detailed forecasts.
+It shows the current weather of any city entered by the user and, when clicking a city, displays detailed forecasts and weather information.
 
 ## 🖥 Preview
 
 The app features:
-- City-based weather search
-- Display of temperature, humidity, wind speed, and weather condition
-- Dynamic weather icons
+- City-based weather search (OpenWeatherMap)
+- Display of temperature, humidity, and weather condition in cards
+- Click a city card to view:
+  - Weather alerts (if available)
+  - 24-hour forecast with weather emojis and hour-by-hour scroll
+  - 3-day forecast (max/min temperature with emoji)
+  - Map with city location
+  - Details: feels like, UV index, visibility, humidity, precipitation, and pressure
 - Error handling for invalid cities
-- Clean and responsive UI
+- Clean and responsive UI inspired by iOS
 
 ## 🚀 How to Run
 
 1. Clone the repository or download the weather app folder
-2. Open the index.html file in your browser
-3. Replace the API key in script.js with your own key from OpenWeatherMap
+2. Open the `index.html` file in your browser
+3. The app is ready to use (API keys for OpenWeatherMap and WeatherAPI are already included)
 
 No installation or setup required
 
 ## 📁 Files
 
 - `index.html` — weather app structure
-
 - `style.css` — visual styling
-
 - `script.js` — logic and API integration
+
+---
