@@ -5,7 +5,7 @@ function addCity() {
   if (!city) return;
 
   if (addedCities.has(city.toLowerCase())) {
-    alert("Cidade já adicionada!");
+    alert("City already added!");
     return;
   }
 
@@ -18,7 +18,7 @@ function fetchWeather(city) {
 
   fetch(url)
     .then(response => {
-      if (!response.ok) throw new Error("Cidade não encontrada.");
+      if (!response.ok) throw new Error("City not found.");
       return response.json();
     })
     .then(data => {
@@ -26,7 +26,7 @@ function fetchWeather(city) {
       createWeatherCard(data);
     })
     .catch(error => {
-      alert("Erro: " + error.message);
+      alert("Error: " + error.message);
     });
 }
 
@@ -54,16 +54,16 @@ async function showCityDetails(lat, lon, name, country) {
   const res = await fetch(url);
   const data = await res.json();
 
-  // Avisos meteorológicos
+  // Weather alerts
   let alertsHtml = '';
   if (data.alerts && data.alerts.alert && data.alerts.alert.length > 0) {
-    alertsHtml = `<div class="details-block"><h3>⚠️ Alertas</h3><ul>` +
+    alertsHtml = `<div class="details-block"><h3>⚠️ Alerts</h3><ul>` +
       data.alerts.alert.map(a => `<li><b>${a.headline}</b>: ${a.desc}</li>`).join('') +
       `</ul></div>`;
   }
 
-  // Previsão horária de hoje (emojis)
-  let hourlyHtml = '<div class="details-block"><h3>Previsão Horária de Hoje</h3><div class="hourly-scroll">';
+  // Today's hourly forecast (emojis)
+  let hourlyHtml = '<div class="details-block"><h3>Today\'s Hourly Forecast</h3><div class="hourly-scroll">';
   if (data.forecast && data.forecast.forecastday && data.forecast.forecastday[0]) {
     const hours = data.forecast.forecastday[0].hour;
     for (let i = 0; i < 24; i++) {
@@ -83,8 +83,8 @@ async function showCityDetails(lat, lon, name, country) {
   }
   hourlyHtml += '</div></div>';
 
-  // Previsão 3 dias (máx/min)
-  let dailyHtml = '<div class="details-block"><h3>3 Dias</h3>';
+  // 3-day forecast (max/min)
+  let dailyHtml = '<div class="details-block"><h3>3-Day Forecast</h3>';
   if (data.forecast && data.forecast.forecastday) {
     for (let i = 0; i < Math.min(3, data.forecast.forecastday.length); i++) {
       const day = data.forecast.forecastday[i];
@@ -93,7 +93,7 @@ async function showCityDetails(lat, lon, name, country) {
         <div class="details-row-emoji">
           <span>${getWeatherEmoji(day.day.condition.text)}</span>
           <div>
-            <b>${date.toLocaleDateString('pt-PT', { weekday: 'short', day: 'numeric', month: 'short' })}</b><br>
+            <b>${date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short' })}</b><br>
             <span style="color:#f59e42;">${Math.round(day.day.maxtemp_c)}°C</span> /
             <span style="color:#60a5fa;">${Math.round(day.day.mintemp_c)}°C</span>
             <span style="font-size:1.1rem; color:#6b7280;">${day.day.condition.text}</span>
@@ -106,7 +106,7 @@ async function showCityDetails(lat, lon, name, country) {
   }
   dailyHtml += '</div>';
 
-  // Detalhes (incluindo vento)
+  // Details (including wind)
   const feelsLike = data.current ? Math.round(data.current.feelslike_c) : null;
   const temp = data.current ? Math.round(data.current.temp_c) : null;
   const wind = data.current ? data.current.wind_kph : null;
@@ -118,54 +118,54 @@ async function showCityDetails(lat, lon, name, country) {
 
   const detailsHtml = `
     <div class="details-block">
-      <h3>Detalhes</h3>
+      <h3>Details</h3>
       <div class="details-list">
         <div class="details-list-item">
-          <span class="emoji">${feelsLike < temp ? "🥶" : feelsLike > temp ? "🥵" : "🤗"}</span>
-          Sensação<br>
+          <span class="emoji">🌡</span>
+          Temperature<br>
           <b>${feelsLike !== null ? feelsLike + "°C" : "N/A"}</b>
           <div class="details-desc">${feelsLike !== null && temp !== null && wind !== null ? getFeelsLikeDescription(feelsLike, temp, wind) : ""}</div>
         </div>
         <div class="details-list-item">
-          <span class="emoji">💨</span>Vento<br>
+          <span class="emoji">༄｡°</span>Wind<br>
           <div style="margin-top:0.3em;">
             <div style="background:#f3f4f6;border-radius:8px;padding:0.3em 0.6em;margin-bottom:0.3em;">
-              <b>Velocidade:</b> ${wind !== null ? wind + " km/h" : "N/A"}
+              <b>Speed:</b> ${wind !== null ? wind + " km/h" : "N/A"}
             </div>
             <div style="background:#f3f4f6;border-radius:8px;padding:0.3em 0.6em;margin-bottom:0.3em;">
-              <b>Rajadas:</b> ${gust !== null ? gust + " km/h" : "N/A"}
+              <b>Gusts:</b> ${gust !== null ? gust + " km/h" : "N/A"}
             </div>
             <div style="background:#f3f4f6;border-radius:8px;padding:0.3em 0.6em;">
-              <b>Direção:</b> ${windDir !== null ? getWindDirection(windDir) + ` (${windDir}°)` : "N/A"}
+              <b>Direction:</b> ${windDir !== null ? getWindDirection(windDir) + ` (${windDir}°)` : "N/A"}
             </div>
           </div>
         </div>
         <div class="details-list-item">
-          <span class="emoji">🧴</span>
+          <span class="emoji">☀︎</span>
           UV<br>
           <b>${uv !== null ? uv : "N/A"}</b>
           <div class="details-desc">${uv !== null ? getUVDescription(uv) : ""}</div>
         </div>
         <div class="details-list-item">
-          <span class="emoji">💦</span>
-          Humidade<br>
+          <span class="emoji">💧</span>
+          Humidity<br>
           <b>${humidity !== null ? humidity + "%" : "N/A"}</b>
-          <div class="details-desc">${dew !== null ? `Ponto de condensação: ${dew}°C` : ""}</div>
+          <div class="details-desc">${dew !== null ? `Dew point: ${dew}°C` : ""}</div>
         </div>
         <div class="details-list-item">
-          <span class="emoji">🌁</span>
-          Visibilidade<br>
+          <span class="emoji">👁</span>
+          Visibility<br>
           <b>${data.current ? data.current.vis_km + " km" : "N/A"}</b>
           <div class="details-desc">${data.current ? getVisibilityDescription(data.current.vis_km) : ""}</div>
         </div>
         <div class="details-list-item">
-          <span class="emoji">☔</span>
-          Precipitação<br>
+          <span class="emoji">🌨</span>
+          Precipitation<br>
           <b>${data.current ? data.current.precip_mm + " mm" : "N/A"}</b>
         </div>
         <div class="details-list-item">
           <span class="emoji">🧭</span>
-          Pressão<br>
+          Pressure<br>
           <b>${data.current ? data.current.pressure_mb + " hPa" : "N/A"}</b>
           ${data.current ? getPressureBar(data.current.pressure_mb) : ""}
         </div>
@@ -173,10 +173,10 @@ async function showCityDetails(lat, lon, name, country) {
     </div>
   `;
 
-  // Mapa do Vento
+  // Wind Map (Windy.com)
   const mapHtml = `
     <div class="details-block">
-      <h3>Mapa do Vento</h3>
+      <h3>Wind Map</h3>
       <iframe
         width="100%"
         height="250"
@@ -189,7 +189,7 @@ async function showCityDetails(lat, lon, name, country) {
     </div>
   `;
 
-  // Montar painel
+  // Mount panel
   document.getElementById('detailsPanel').innerHTML = `
     <div class="details-content">
       <button class="close-btn" onclick="closeDetailsPanel()">&times;</button>
@@ -202,27 +202,13 @@ async function showCityDetails(lat, lon, name, country) {
     </div>
   `;
   document.getElementById('detailsPanel').classList.add('active');
-
-  setTimeout(() => {
-    if (window.L) {
-      const map = L.map('map').setView([lat, lon], 8);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
-      }).addTo(map);
-      // Camada de vento do OpenWeatherMap
-      L.tileLayer(`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${apiKey}`, {
-        opacity: 0.7,
-        attribution: '© OpenWeatherMap'
-      }).addTo(map);
-    }
-  }, 300);
 }
 
 function closeDetailsPanel() {
   document.getElementById('detailsPanel').classList.remove('active');
 }
 
-// Função de emoji (atualizada para texto):
+// Emoji function (updated for text):
 function getWeatherEmoji(text) {
   text = text.toLowerCase();
   if (text.includes('clear')) return '☀️';
@@ -237,17 +223,17 @@ function getWeatherEmoji(text) {
 }
 
 function getFeelsLikeDescription(feels, temp, wind) {
-  if (feels < temp) return `Parece mais fresco devido ao vento (${wind} km/h)`;
-  if (feels > temp) return `Parece mais quente que o real`;
-  return `Sensação igual à temperatura real`;
+  if (feels < temp) return `Feels cooler due to wind (${wind} km/h)`;
+  if (feels > temp) return `Feels warmer than actual`;
+  return `Feels like actual temperature`;
 }
 
 function getUVDescription(uv) {
-  if (uv < 3) return "Baixo";
-  if (uv < 6) return "Moderado";
-  if (uv < 8) return "Alto";
-  if (uv < 11) return "Muito alto";
-  return "Extremo";
+  if (uv < 3) return "Low";
+  if (uv < 6) return "Moderate";
+  if (uv < 8) return "High";
+  if (uv < 11) return "Very high";
+  return "Extreme";
 }
 
 function getWindDirection(deg) {
@@ -256,24 +242,24 @@ function getWindDirection(deg) {
 }
 
 function getDewPoint(temp, humidity) {
-  // Fórmula simplificada de Magnus
+  // Magnus formula (simplified)
   const a = 17.27, b = 237.7;
   const alpha = ((a * temp) / (b + temp)) + Math.log(humidity/100);
   return (b * alpha) / (a - alpha);
 }
 
 function getVisibilityDescription(vis) {
-  if (vis >= 10) return "Excelente visibilidade";
-  if (vis >= 5) return "Boa visibilidade";
-  if (vis >= 2) return "Visibilidade moderada";
-  return "Visibilidade baixa";
+  if (vis >= 10) return "Excellent visibility";
+  if (vis >= 5) return "Good visibility";
+  if (vis >= 2) return "Moderate visibility";
+  return "Low visibility";
 }
 
 function getPressureBar(pressure) {
-  // 1013 hPa é o valor médio ao nível do mar
+  // 1013 hPa is average sea level pressure
   let percent = Math.min(Math.max((pressure - 980) / (1040 - 980), 0), 1);
   let color = percent > 0.5 ? "#60a5fa" : "#f59e42";
-  let label = pressure < 1013 ? "Baixa" : pressure > 1025 ? "Alta" : "Normal";
+  let label = pressure < 1013 ? "Low" : pressure > 1025 ? "High" : "Normal";
   return `
     <div style="height:8px;width:90%;background:#e5e7eb;border-radius:4px;margin:0.3em auto 0.2em auto;overflow:hidden;">
       <div style="width:${percent*100}%;height:100%;background:${color};transition:width 0.5s"></div>
@@ -282,4 +268,4 @@ function getPressureBar(pressure) {
   `;
 }
 
-// As chaves vêm do config.js, que não está no GitHub
+// The API keys come from config.js, which is not on GitHub
