@@ -71,20 +71,22 @@ h1 {
 }
 
 .weather-card {
-  background: rgba(255,255,255,0.95);
+  background: linear-gradient(135deg, #cfd9df 0%, #e2ebf0 100%);
   border-radius: 22px;
   padding: 1.5rem 1.2rem;
   box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.10);
-  text-align: left;
+  text-align: center;
   margin: 0 auto;
   width: 90%;
   max-width: 340px;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
-.weather-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+.weather-card .weather-emoji {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
 }
 
 .weather-card h2 {
@@ -94,10 +96,24 @@ h1 {
   font-weight: 600;
 }
 
-.weather-card p {
-  margin: 0.3rem 0;
+.weather-card .temp {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #6366f1;
+  margin-bottom: 0.2rem;
+}
+
+.weather-card .condition {
+  font-size: 1.1rem;
   color: #4b5563;
-  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.weather-card .details-row {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1rem;
+  color: #6b7280;
 }
 
 .details-panel {
@@ -115,7 +131,7 @@ h1 {
 }
 
 .details-content {
-  background: #fff;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
   border-radius: 24px;
   padding: 2rem;
   max-width: 95vw;
@@ -140,6 +156,14 @@ h1 {
   color: #ef4444;
 }
 
+.details-block {
+  background: rgba(255,255,255,0.85);
+  border-radius: 18px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+}
+
 /* Barra de rolagem horizontal para previsão horária */
 .hourly-scroll {
   overflow-x: auto;
@@ -154,4 +178,12 @@ h1 {
 .hourly-scroll::-webkit-scrollbar-thumb {
   background: #d1d5db;
   border-radius: 4px;
+}
+
+.hourly-scroll > div {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(99,102,241,0.07);
+  margin-right: 8px;
+  padding: 0.5rem 0.3rem;
 }

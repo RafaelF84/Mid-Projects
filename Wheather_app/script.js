@@ -1,4 +1,3 @@
-
 const addedCities = new Set();
 
 function addCity() {
@@ -32,13 +31,19 @@ function fetchWeather(city) {
 }
 
 function createWeatherCard(data) {
+  const emoji = getWeatherEmoji(data.weather[0].main);
   const card = document.createElement("div");
   card.className = "weather-card";
   card.innerHTML = `
+    <div class="weather-emoji">${emoji}</div>
     <h2>${data.name}, ${data.sys.country}</h2>
-    <p><strong>🌡 Temperatura:</strong> ${data.main.temp} °C</p>
-    <p><strong>💧 Humidade:</strong> ${data.main.humidity}%</p>
-    <p><strong>🌥 Condição:</strong> ${data.weather[0].main} (${data.weather[0].description})</p>
+    <div class="temp">${Math.round(data.main.temp)}°C</div>
+    <div class="condition">${data.weather[0].main} (${data.weather[0].description})</div>
+    <div class="details-row">
+      <span>💧 ${data.main.humidity}%</span>
+      <span>🔽 ${Math.round(data.main.temp_min)}°</span>
+      <span>🔼 ${Math.round(data.main.temp_max)}°</span>
+    </div>
   `;
   card.addEventListener('click', () => showCityDetails(data.coord.lat, data.coord.lon, data.name, data.sys.country));
   document.getElementById("citiesContainer").appendChild(card);
@@ -123,14 +128,20 @@ async function showCityDetails(lat, lon, name, country) {
     <div class="details-content">
       <button class="close-btn" onclick="closeDetailsPanel()">&times;</button>
       <h2>${name}, ${country}</h2>
-      ${alertsHtml}
-      <h3>Today's Hourly Forecast</h3>
-      ${hourlyHtml}
-      <h3>3 Days</h3>
-      ${dailyHtml}
+      <div class="details-block">${alertsHtml}</div>
+      <div class="details-block">
+        <h3>Previsão Horária de Hoje</h3>
+        ${hourlyHtml}
+      </div>
+      <div class="details-block">
+        <h3>3 Dias</h3>
+        ${dailyHtml}
+      </div>
+      <div class="details-block">
+        <h3>Detalhes</h3>
+        ${detailsHtml}
+      </div>
       ${mapHtml}
-      <h3>Details</h3>
-      ${detailsHtml}
     </div>
   `;
   document.getElementById('detailsPanel').classList.add('active');
